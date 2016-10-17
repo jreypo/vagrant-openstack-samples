@@ -1,0 +1,37 @@
+heat_template_version: 2015-04-30
+
+description: >
+    Create the network infrastructure to deploy an instance
+
+parameters:
+  external_network_id:
+    type: string
+    label: public
+    description: UUID for the external network
+    default: 57b7661e-fc3b-4cb8-9336-cc3fbbe9fdb7
+
+resources:
+  labnet05:
+    type: OS::Neutron::Net
+    properties:
+      name: labnet05
+  labsubnet05:
+    type: OS::Neutron::Subnet
+    properties:
+      name: labsubnet05
+      cidr: 172.16.22.0/24
+      dns_nameservers: [8.8.8.8]
+      network_id: { get_resource: labnet05 }
+      allocation_pools:
+        - { start: 172.16.22.100, end: 172.16.22.150 }
+  router5:
+    type: OS::Neutron::Router
+    properties:
+      name: router5
+      admin_state_up: True
+      external_gateway_info: { "network": { get_param: external_network_id }}
+  router5_int0:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router5 }
+      subnet_id: { get_resource: labsubnet05 }

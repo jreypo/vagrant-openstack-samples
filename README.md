@@ -1,7 +1,8 @@
 # vagrant-openstack-samples
 
-Sample Vagrantfiles for the OpenStack provider. 
+Sample Vagrantfiles for the OpenStack provider.
 
-- vagrant-osp-single: Provision a single instance in OpenStack. 
+- **vagrant-osp-single**: Provision a single instance in OpenStack.
+- **vagrant-osp-heat-stack**: Provision two instances and create the network infrastructure with a Heat stack.
 
 Tested with Vagrant 1.8.5 and OpenStack Mitaka (Red Hat OSP 9)
